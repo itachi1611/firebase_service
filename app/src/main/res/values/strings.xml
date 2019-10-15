@@ -1,0 +1,12 @@
+<resources>
+    <string name="facebook_app_id">448671252418348</string>
+    <string name="fb_login_protocol_scheme">fb448671252418348</string>
+    <string name="app_name">Firebase</string>
+    <string name="image_description" />
+    <string name="btn_login">Login</string>
+    <string name="btn_register">Register</string>
+    <string name="hint_edtEmail">Your email</string>
+    <string name="hint_edtPassword">Your password</string>
+    <string name="btn_SignOut">Log out from firebase ...</string>
+    <string name="btn_recover">Recover your password</string>
+</resources>
