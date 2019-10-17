@@ -87,45 +87,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(new Intent(MainActivity.this, RecoverActivity.class));
     }
 
-    private void onValidateData(String email, String password){
-        if(TextUtils.isEmpty(email)) {
-            Toast.makeText(MainActivity.this, "Email can not be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(TextUtils.isEmpty(password)){
-            Toast.makeText(MainActivity.this, "Password can not be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(password.length() < 5){
-            Toast.makeText(MainActivity.this, "Password at least have 5 character", Toast.LENGTH_SHORT).show();
-            return;
-        }
-    }
-
     private void onRegister() {
         String email = edtEmail.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
-        onValidateData(email, password);
-        progressBar.setVisibility(View.VISIBLE);
-        mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    progressBar.setVisibility(View.GONE);
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Log.d(TAG, "createUserWithEmail:success", task.getException());
-                        Toast.makeText(MainActivity.this, "Registration succeeded.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.d(TAG, "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(MainActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
-                    }
-
-                    // ...
-                }
-            });
+        if(TextUtils.isEmpty(email)) {
+            Toast.makeText(MainActivity.this, "Email can not be empty", Toast.LENGTH_SHORT).show();
+            edtEmail.requestFocus();
+        }
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(MainActivity.this, "Password can not be empty", Toast.LENGTH_SHORT).show();
+            edtPassword.requestFocus();
+        }
+        if(password.length() < 5){
+            Toast.makeText(MainActivity.this, "Password at least have 5 character", Toast.LENGTH_SHORT).show();
+            edtPassword.requestFocus();
+        }
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+            progressBar.setVisibility(View.VISIBLE);
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBar.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                //FirebaseUser user = mAuth.getCurrentUser();
+                                Log.d(TAG, "createUserWithEmail:success", task.getException());
+                                Toast.makeText(MainActivity.this, "Registration succeeded.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.d(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(MainActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
+                            }
+                            // ...
+                        }
+                    });
+        }
     }
 
     @Override
@@ -137,30 +134,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void onLogin() {
         String email = edtEmail.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
-        onValidateData(email,password);
-        progressBar.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    progressBar.setVisibility(View.GONE);
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success");
-                        Toast.makeText(MainActivity.this, "Sign in succeeded.",
-                                Toast.LENGTH_SHORT).show();
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                        finish();
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.d(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(MainActivity.this, "Sign in  failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                    // ...
-                }
-            });
+        if(TextUtils.isEmpty(email)) {
+            Toast.makeText(MainActivity.this, "Email can not be empty", Toast.LENGTH_SHORT).show();
+            edtEmail.requestFocus();
+        }
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(MainActivity.this, "Password can not be empty", Toast.LENGTH_SHORT).show();
+            edtPassword.requestFocus();
+        }
+        if(password.length() < 5){
+            Toast.makeText(MainActivity.this, "Password at least have 5 character", Toast.LENGTH_SHORT).show();
+            edtPassword.requestFocus();
+        }
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+            progressBar.setVisibility(View.VISIBLE);
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBar.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                Toast.makeText(MainActivity.this, "Sign in succeeded.",
+                                        Toast.LENGTH_SHORT).show();
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                                finish();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.d(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(MainActivity.this, "Sign in  failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            // ...
+                        }
+                    });
+        }
     }
 
     public void onFacebookAuthentication() {
